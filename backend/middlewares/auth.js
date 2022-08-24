@@ -1,12 +1,11 @@
 const jwt = require('jsonwebtoken');
 const UnauthorizedError = require('../utils/errors/UnauthorizedError');
 
-const extractBearer = (header) => {
-  if (header) header.replace('Bearer ', '');
-};
+const extractBearer = (header) => header.replace('Bearer ', '');
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
+  console.log('token here', authorization);
   if (!authorization || !authorization.startsWith('Bearer ')) {
     next(new UnauthorizedError('Unauthorized'));
   }
@@ -19,5 +18,6 @@ module.exports = (req, res, next) => {
     next(new UnauthorizedError('Unauthorized'));
   }
   req.user = payload;
+  console.log('user', payload);
   next();
 };
