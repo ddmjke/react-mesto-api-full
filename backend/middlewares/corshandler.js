@@ -1,7 +1,7 @@
 module.exports = (req, res, next) => {
   const allowedCors = [
-    'https://moredomains.nomoredomains.sbs/',
-    'http://moredomains.nomoredomains.sbs/',
+    'https://moredomains.nomoredomains.sbs',
+    'http://moredomains.nomoredomains.sbs',
     'localhost:3000',
   ];
   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
