@@ -11,6 +11,7 @@ const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const linkRegEx = require('./utils/regexes');
 const NotFoundError = require('./utils/errors/NotFoundError');
+const corshandler = require('./middlewares/corshandler');
 
 const { PORT = 3000 } = process.env;
 
@@ -25,6 +26,7 @@ app.use(helmet());
 app.use(limit);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(corshandler);
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
