@@ -3,6 +3,8 @@
 
 Ссылка на  приложение [https://moredomains.nomoredomains.sbs/](https://moredomains.nomoredomains.sbs/)
 
+Публичный адрес сервера 62.84.115.165 
+
 Ссылка на [сорс фронтенда приложения](https://github.com/ddmjke/react-mesto-auth)
 
   
