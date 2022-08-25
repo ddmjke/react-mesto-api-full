@@ -13,6 +13,8 @@ const linkRegEx = require('./utils/regexes');
 const NotFoundError = require('./utils/errors/NotFoundError');
 const corshandler = require('./middlewares/corshandler');
 
+require('dotenv').config();
+
 const { PORT = 3000 } = process.env;
 
 const app = express();

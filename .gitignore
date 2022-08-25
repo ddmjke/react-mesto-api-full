@@ -13,6 +13,7 @@ node_modules
 .DS_Store
 .idea
 .vscode
+.env
 
 # frontend folder content
 frontend
