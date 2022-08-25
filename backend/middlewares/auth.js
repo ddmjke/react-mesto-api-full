@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const UnauthorizedError = require('../utils/errors/UnauthorizedError');
 
+require('dotenv').config();
+
 const { JWT_SECRET } = process.env;
 
 const extractBearer = (header) => header.replace('Bearer ', '');

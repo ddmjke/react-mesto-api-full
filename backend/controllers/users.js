@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
+require('dotenv').config();
+
 const { JWT_SECRET } = process.env;
 
 const UnauthorizedError = require('../utils/errors/UnauthorizedError');
