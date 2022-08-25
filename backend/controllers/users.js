@@ -4,7 +4,7 @@ const User = require('../models/user');
 
 require('dotenv').config();
 
-const { JWT_SECRET } = process.env;
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 const UnauthorizedError = require('../utils/errors/UnauthorizedError');
 const BadRequestError = require('../utils/errors/BadRequestError');
@@ -126,7 +126,11 @@ module.exports.login = (req, res, next) => {
             if (!matches) {
               throw new UnauthorizedError();
             } else {
-              const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+              const token = jwt.sign(
+                { _id: user._id },
+                NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+                { expiresIn: '7d' },
+              );
               res.send({ token });
             }
           })

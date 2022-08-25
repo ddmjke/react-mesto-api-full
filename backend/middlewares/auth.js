@@ -3,7 +3,7 @@ const UnauthorizedError = require('../utils/errors/UnauthorizedError');
 
 require('dotenv').config();
 
-const { JWT_SECRET } = process.env;
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 const extractBearer = (header) => header.replace('Bearer ', '');
 
@@ -16,7 +16,10 @@ module.exports = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, JWT_SECRET);
+    payload = jwt.verify(
+      token,
+      NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+    );
   } catch (err) {
     next(new UnauthorizedError('Unauthorized'));
   }
