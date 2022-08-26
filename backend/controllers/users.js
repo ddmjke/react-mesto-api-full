@@ -42,9 +42,7 @@ module.exports.createUser = (req, res, next) => {
 module.exports.getUsers = (req, res, next) => {
   User.find({})
     .then((users) => res.send(users))
-    .catch(() => {
-      next(new BadRequestError());
-    });
+    .catch(next);
 };
 
 module.exports.getUserById = (req, res, next) => {
@@ -70,9 +68,7 @@ module.exports.getUser = (req, res, next) => {
       next(new NotFoundError());
     })
     .then((usr) => res.send(usr))
-    .catch(() => {
-      next(new BadRequestError());
-    });
+    .catch(next);
 };
 
 module.exports.patchUser = (req, res, next) => {
