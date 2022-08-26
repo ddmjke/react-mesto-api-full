@@ -4,6 +4,9 @@ const { login, createUser } = require('../controllers/users');
 const auth = require('../middlewares/auth');
 const linkRegEx = require('../utils/regexes');
 const NotFoundError = require('../utils/errors/NotFoundError');
+const corshandler = require('../middlewares/corshandler');
+
+router.use(corshandler);
 
 router.post('/signin', celebrate({
   body: Joi.object().keys({
