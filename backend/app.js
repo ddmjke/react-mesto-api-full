@@ -2,13 +2,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const process = require('process');
-const { errors } = require('celebrate');
+const { errors, celebrate, Joi } = require('celebrate');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const corshandler = require('./middlewares/corshandler');
-const routes = require('./routes/index');
+const { login, createUser } = require('./controllers/users');
+const auth = require('./middlewares/auth');
+const linkRegEx = require('./utils/regexes');
+const NotFoundError = require('./utils/errors/NotFoundError');
 
 require('dotenv').config();
 
@@ -39,8 +42,28 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.use(routes);
+app.post('/signin', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required(),
+  }),
+}), login);
 
+app.post('/signup', celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().min(2).max(30),
+    about: Joi.string().min(2).max(30),
+    avatar: Joi.string().pattern(linkRegEx),
+    email: Joi.string().required().email(),
+    password: Joi.string().required(),
+  }),
+}), createUser);
+
+app.use('/users', auth, require('./routes/users'));
+
+app.use('/cards', auth, require('./routes/cards'));
+
+app.use('/*', auth, () => { throw new NotFoundError(); });
 app.use(errorLogger);
 
 app.use(errors());
